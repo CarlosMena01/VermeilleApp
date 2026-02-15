@@ -22,12 +22,12 @@ const messages = [
     },
     {
         title: "México",
-        body: "Fue un viaje loco jajaja, y un poco irresponsable financieramente de mi parte, pero valió totalmente la pena, nos acercamos de manera real, con conversaciones dificiles (aunque durmiera un poco) pero nos mostró lo fuerte que es nuestro amor, soy feliz de haber compartido más tiempo contigo y ver otra puesta de sol a tu lado :3",
+        body: "Fue un viaje loco jajaja, y un poco irresponsable financieramente, pero valió totalmente la pena, nos acercamos de manera real, con conversaciones dificiles (aunque durmiera un poco) pero nos mostró lo fuerte que es nuestro amor, soy feliz de haber visto otra puesta de sol a tu lado :3",
         image: mexicoImage // Placeholder: Reemplazar con foto de México
     },
     {
         title: "La distancia",
-        body: "Sé que este es el capítulo más dificil de nuestra historia, ninguno de los dos está preparado para una relación a distancia, pero no dudo ni un segundo que lo superaremos juntos, te amo mucho y extraño cada día mi muchachita. Y sé que será muy hermoso cuando nos volvamos a ver y pueda darte besitos en la mañana <3",
+        body: "Sé que este es el capítulo más dificil, ninguno de los dos está preparado para una relación a distancia, pero no dudo ni un segundo que lo superaremos juntos, te amo mucho y extraño cada día mi muchachita. Y será muy hermoso cuando nos volvamos a ver y pueda darte besitos al despertar <3",
         image: distanciaImage // Placeholder: Reemplazar con foto actual/distancia
     }
 ];
@@ -77,7 +77,7 @@ const MessageGallery: React.FC<MessageGalleryProps> = ({ onFinish }) => {
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-rose-50 p-6">
-            <h2 className="text-xl font-bold text-pink-400 mb-8 uppercase tracking-widest">Mis Razones</h2>
+            <h2 className="text-xl font-bold text-pink-400 mb-8 uppercase tracking-widest">Nuestra historia</h2>
 
             <div className={`relative w-full max-w-sm aspect-[4/5] perspective-1000 transition-all duration-500 ease-in-out ${isFading ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
                 <div
@@ -88,7 +88,7 @@ const MessageGallery: React.FC<MessageGalleryProps> = ({ onFinish }) => {
                         <Heart className="w-12 h-12 text-pink-200 mb-4 absolute top-6" fill="currentColor" />
                         <div className="animation-fade-in-slide-up">
                             <h3 className="text-2xl font-bold text-gray-800 mb-4">{messages[currentIndex].title}</h3>
-                            <p className="text-gray-600 text-lg leading-relaxed italic">
+                            <p className="text-gray-600 text-lg leading-relaxed italic text-center justify-center text-justify">
                                 "{messages[currentIndex].body}"
                             </p>
                         </div>

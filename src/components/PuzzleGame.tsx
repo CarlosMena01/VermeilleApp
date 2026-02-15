@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import puzzleImage from '../assets/puzzle.jpg';
 
 interface PuzzleGameProps {
-    onWin: () => void;
+    onWin: (skipped?: boolean) => void;
 }
 
 const GRID_SIZE = 3;
@@ -90,32 +90,44 @@ const PuzzleGame: React.FC<PuzzleGameProps> = ({ onWin }) => {
         );
     };
 
+    const [showNumbers, setShowNumbers] = useState(false);
+
+    // ... existing canMove ...
+
     // 300x300 placeholder image
     const imageUrl = puzzleImage;
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-pink-50 p-4">
             <h2 className="text-2xl font-bold text-pink-600 mb-2">Resuelve para ver mi regalo ❤️</h2>
-            <div className="mb-4 text-pink-500">Movimientos: {moves}</div>
+            <div className="text-pink-500 mb-2">Movimientos: {moves}</div>
+
+            {moves > 20 && (
+                <div className="flex gap-2 mb-4">
+                    <button
+                        onClick={() => setShowNumbers(!showNumbers)}
+                        className="text-xs text-pink-500 bg-pink-100 px-3 py-1 rounded-full hover:bg-pink-200 transition-colors"
+                    >
+                        {showNumbers ? 'Ocultar ayuda' : '¿Ayuda?'}
+                    </button>
+
+                    {moves > 45 && (
+                        <button
+                            onClick={() => onWin(true)}
+                            className="text-xs text-white bg-red-400 px-3 py-1 rounded-full hover:bg-red-500 transition-colors animate-pulse"
+                        >
+                            ¡Me rindo!
+                        </button>
+                    )}
+                </div>
+            )}
 
             <div
                 className="grid grid-cols-3 gap-1 bg-white p-1 rounded-lg shadow-xl"
                 style={{ width: '310px', height: '310px' }} // 300px + gaps/padding
             >
                 {tiles.map((tileNumber, index) => {
-                    // Calculate background position
-                    // tileNumber 0 -> 0,0
-                    // tileNumber 1 -> 0, 33%
-                    // ... 
-                    // We need percentage: x% y%
-                    // col = tileNumber % 3, row = Math.floor(tileNumber/3)
-                    // 3x3 grid means 0%, 50%, 100% positions? No.
-                    // In CSS background-position for 3x3: 
-                    // 0 = 0% 0%
-                    // 1 = 50% 0%
-                    // 2 = 100% 0%
-                    // 3 = 0% 50%
-                    // etc.
+                    // ... existing position calc ...
                     const x = (tileNumber % 3) * 50;
                     const y = Math.floor(tileNumber / 3) * 50;
 
@@ -127,24 +139,26 @@ const PuzzleGame: React.FC<PuzzleGameProps> = ({ onWin }) => {
                         <div
                             key={index}
                             onClick={() => handleTileClick(index)}
-                            className="cursor-pointer transition-transform duration-200 ease-in-out hover:scale-[0.98] rounded-sm"
+                            className="cursor-pointer transition-transform duration-200 ease-in-out hover:scale-[0.98] rounded-sm relative flex items-center justify-center font-bold text-white text-xl drop-shadow-md"
                             style={{
                                 backgroundImage: `url(${imageUrl})`,
-                                backgroundSize: '300%', // 300% to cover the whole logical image area since each tile is 1/3
+                                backgroundSize: '300%',
                                 backgroundPosition: `${x}% ${y}%`,
                                 width: '100px',
                                 height: '100px',
                             }}
                         >
-                            {/* Optional number for easy testing/hint */}
-                            {/* <span className="text-xs text-white drop-shadow-md p-1">{tileNumber + 1}</span> */}
+                            {showNumbers && <span>{tileNumber + 1}</span>}
                         </div>
                     );
                 })}
             </div>
 
             <button
-                onClick={shuffleTiles}
+                onClick={() => {
+                    shuffleTiles();
+                    setShowNumbers(false);
+                }}
                 className="mt-8 text-pink-400 underline text-sm hover:text-pink-600"
             >
                 Reiniciar Puzzle

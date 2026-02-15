@@ -26,13 +26,13 @@ const FinalScreen: React.FC<FinalScreenProps> = ({ onRestart }) => {
                 Gracias por la felicidad que me das cada día, por tu amor y por ser mi todo. TE AMO DEMASIADO MI BÉBÉ.
             </p>
 
-            {/* <button
+            <button
                 onClick={onRestart}
                 className="flex items-center gap-2 text-gray-500 hover:text-pink-500 transition-colors text-sm"
             >
                 <RefreshCcw size={16} />
                 Volver a vivirlo
-            </button> */}
+            </button>
 
             <footer className="absolute bottom-4 text-xs text-gray-400">
                 Hecho por tu Colombiano favorito

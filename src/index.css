@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-bg: #fff0f5;
+    --color-primary: #ff69b4;
+    --color-secondary: #ff1493;
+    --color-accent: #ffb7c5;
+  }
+
+  body {
+    @apply m-0 flex place-items-center min-w-[320px] min-h-screen bg-rose-50 text-gray-800 overflow-x-hidden;
+  }
+
+  #root {
+    @apply w-full max-w-[480px] mx-auto min-h-screen flex flex-col bg-white shadow-2xl relative overflow-hidden;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply bg-pink-500 text-white font-bold py-3 px-6 rounded-full shadow-md transition-transform active:scale-95 hover:bg-pink-600;
+  }
+
+  .card {
+    @apply bg-white rounded-2xl p-6 shadow-sm m-2 text-center;
+  }
+}
+
+.floating-hearts {
+  @apply absolute top-0 left-0 w-full h-full pointer-events-none z-0 overflow-hidden;
+}
+
+.heart {
+  @apply absolute bottom-[-20px] text-pink-300 opacity-60 animate-float;
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Custom Utilities */
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-pink-700;
+}

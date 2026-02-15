@@ -35,17 +35,25 @@ const messages = [
 const MessageGallery: React.FC<MessageGalleryProps> = ({ onFinish }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [showImage, setShowImage] = useState(false);
+    const [isFading, setIsFading] = useState(false);
 
     const nextMessage = () => {
         if (!showImage) {
             setShowImage(true);
         } else {
-            setShowImage(false);
-            if (currentIndex < messages.length - 1) {
-                setCurrentIndex(currentIndex + 1);
-            } else {
-                onFinish();
-            }
+            // We are on an image, moving to the next card
+            setIsFading(true);
+
+            setTimeout(() => {
+                setShowImage(false);
+                if (currentIndex < messages.length - 1) {
+                    setCurrentIndex(currentIndex + 1);
+                } else {
+                    onFinish();
+                }
+                // Short delay to allow state to update before fading back in
+                setTimeout(() => setIsFading(false), 50);
+            }, 300); // Wait for fade out
         }
     };
 
@@ -54,8 +62,15 @@ const MessageGallery: React.FC<MessageGalleryProps> = ({ onFinish }) => {
             setShowImage(false);
         } else {
             if (currentIndex > 0) {
-                setCurrentIndex(currentIndex - 1);
-                setShowImage(true);
+                setIsFading(true);
+                setTimeout(() => {
+                    setCurrentIndex(currentIndex - 1);
+                    setShowImage(true); // Should we go back to image or text? Usually text is safer but logic says image. 
+                    // Let's go to text for consistency? Or stick to previous logic (showImage: true). 
+                    // Previous logic: setCurrentIndex(prev); setShowImage(true);
+                    // Let's keep it but fade.
+                    setTimeout(() => setIsFading(false), 50);
+                }, 300);
             }
         }
     };
@@ -64,9 +79,9 @@ const MessageGallery: React.FC<MessageGalleryProps> = ({ onFinish }) => {
         <div className="flex flex-col items-center justify-center min-h-screen bg-rose-50 p-6">
             <h2 className="text-xl font-bold text-pink-400 mb-8 uppercase tracking-widest">Mis Razones</h2>
 
-            <div className="relative w-full max-w-sm aspect-[4/5] perspective-1000">
+            <div className={`relative w-full max-w-sm aspect-[4/5] perspective-1000 transition-all duration-500 ease-in-out ${isFading ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
                 <div
-                    className={`relative w-full h-full transition-transform duration-700 transform-style-3d ${showImage ? 'rotate-y-180' : ''}`}
+                    className={`relative w-full h-full transform-style-3d ${!isFading ? 'transition-transform duration-700' : ''} ${showImage ? 'rotate-y-180' : ''}`}
                 >
                     {/* Front Face (Text) */}
                     <div className="absolute w-full h-full bg-white rounded-2xl shadow-xl p-8 flex flex-col justify-center items-center text-center backface-hidden">

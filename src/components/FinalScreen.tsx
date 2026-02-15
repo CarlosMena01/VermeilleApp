@@ -31,7 +31,7 @@ const FinalScreen: React.FC<FinalScreenProps> = ({ onRestart }) => {
                 className="flex items-center gap-2 text-gray-500 hover:text-pink-500 transition-colors text-sm"
             >
                 <RefreshCcw size={16} />
-                Volver a vivirlo
+                Si quieres puedes repetirlo haha
             </button>
 
             <footer className="absolute bottom-4 text-xs text-gray-400">
